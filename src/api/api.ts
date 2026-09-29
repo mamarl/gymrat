@@ -7,38 +7,46 @@ export async function apiFetch(
   options: RequestInit = {},
   token: string
 ) {
-  const response = await fetch(
-    `${API_URL}${endpoint}`,
-    {
+  const url = `${API_URL}${endpoint}`;
+
+  console.log("🌐 API REQUEST:", url);
+
+  try {
+    const response = await fetch(url, {
       ...options,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
         ...(options.headers || {}),
       },
-    }
-  );
+    });
 
-  let data: any = null;
+    console.log("🌐 API STATUS:", response.status);
 
-  try {
-    data = await response.json();
-  } catch {
-    data = null;
-  }
+    let data: any = null;
 
-  if (!response.ok) {
-    if (response.status === 401) {
-      await forceLogout();
-      throw new Error("AUTH_TOKEN_INVALID");
+    try {
+      data = await response.json();
+    } catch {
+      data = null;
     }
 
-    throw new Error(
-      data?.detail ||
-      data?.error ||
-      "API request failed"
-    );
-  }
+    if (!response.ok) {
+      if (response.status === 401) {
+        await forceLogout();
+        throw new Error("AUTH_TOKEN_INVALID");
+      }
 
-  return data;
+      throw new Error(
+        data?.detail ||
+        data?.error ||
+        "API request failed"
+      );
+    }
+
+    return data;
+  } catch (error) {
+    console.log("❌ API ERROR:", error);
+    throw error;
+  }
 }

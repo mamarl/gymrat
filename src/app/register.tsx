@@ -1,16 +1,16 @@
 import { router } from "expo-router";
 import { useState } from "react";
 import {
-    ActivityIndicator,
-    Alert,
-    Pressable,
-    StyleSheet,
-    Text,
-    TextInput,
-    View,
+  ActivityIndicator,
+  Alert,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from "react-native";
 
-const API_URL = "http://192.168.1.59:8000";
+const API_URL = "https://gymrat-py89.onrender.com";
 
 export default function RegisterScreen() {
   const [username, setUsername] = useState("");
