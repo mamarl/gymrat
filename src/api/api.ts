@@ -1,6 +1,6 @@
 import { forceLogout } from "../context/AuthContext";
 
-const API_URL = "http://192.168.1.59:8000";
+const API_URL = "https://gymrat-py89.onrender.com";
 
 export async function apiFetch(
   endpoint: string,
